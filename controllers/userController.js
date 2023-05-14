@@ -2,6 +2,7 @@ const userModels = require("../models/userModels");
 const CatchAsycErrors =require("../middleware/CatchAsyncError");
 
 const sendTokenCooki = require("../utils/sendTokenCooki.js");
+const ErrorHandler = require("../utils/ErrorHandler");
 
 
 // auth user conrollers 
@@ -17,6 +18,34 @@ const registor = CatchAsycErrors(async (req, res, next) => {
     sendTokenCooki(user, 200, res);
 });
 
+// login user 
+const login = CatchAsycErrors(async (req, res, next) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+        return next(new ErrorHandler("please enter email and password", 400));
+    }
+    const user = await userModels.findOne({ email }).select("+password");
+    if (!user) {
+        return next(new ErrorHandler("user not found", 404));
+    }
+    const isPasswordMatched = await user.comparePassword(password);
+    if (!isPasswordMatched) {
+        return next(new ErrorHandler("password is incorrect", 401));
+    }
+    sendTokenCooki(user, 200, res);
+});
+
+//  logout user 
+const logout = CatchAsycErrors(async (req, res, next) => {
+    res.cookie("token", null, {
+        expires: new Date(Date.now()),
+        httpOnly: true
+    });
+    res.status(200).json({
+        success: true,
+        message: "logged out"
+    })
+});
 
 
 //  admin
@@ -46,4 +75,4 @@ const getUserById = CatchAsycErrors(async (req, res, next) => {
 });
 
 
-module.exports ={registor,getAllUsers,getUserById};
+module.exports ={registor,getAllUsers,getUserById,login,logout};
