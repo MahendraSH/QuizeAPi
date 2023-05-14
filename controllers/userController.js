@@ -1,6 +1,8 @@
 const userModels = require("../models/userModels");
 const CatchAsycErrors =require("../middleware/CatchAsyncError");
 
+const sendTokenCooki = require("../utils/sendTokenCooki.js");
+
 
 // auth user conrollers 
 //  registor users 
@@ -12,11 +14,7 @@ const registor = CatchAsycErrors(async (req, res, next) => {
         password,
     
     });
-    res.status(201).json({  
-        
-        success: true,
-        user,
-    });
+    sendTokenCooki(user, 200, res);
 });
 
 

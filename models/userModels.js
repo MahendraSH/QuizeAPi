@@ -46,12 +46,12 @@ userSchema.pre('save', async function (next) {
         next();
     }
     const SALT_KEY = Number(process.env.SALT_KEY) || 10;
-    this.password = await bycrypt.hash(this.password, SALT_KEY);
+    this.password = await bcrypt.hash(this.password, SALT_KEY);
 
 });
 //  compare password 
 userSchema.methods.comparePassword = async function (password) {
-    return await bycrypt.compare(password, this.password);
+    return await bcrypt.compare(password, this.password);
 }
 
 //  jwttoken generate 
@@ -79,3 +79,6 @@ userSchema.methods.generateResetToken = function () {
 
     return restToken;
 }
+
+
+module.exports = moongoose.model('User', userSchema);   

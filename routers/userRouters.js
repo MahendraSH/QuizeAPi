@@ -9,7 +9,7 @@ router.route('/register').post(registor);
 
 //  admin routers 
 // get all users
-router.route('/').get(getAllUsers);
+router.route('/all').get(getAllUsers);
 
 // get user by id
 router.route('/:id').get(getUserById);
