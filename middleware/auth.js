@@ -31,3 +31,5 @@ const autherizedRoles = (...roles) => {
     }
 };
 
+module.exports = { isAuthenticatedUser, autherizedRoles };
+
