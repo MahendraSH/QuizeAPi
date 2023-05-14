@@ -47,3 +47,5 @@ const getUserById = CatchAsycErrors(async (req, res, next) => {
     });
 });
 
+
+module.exports ={registor,getAllUsers,getUserById};
