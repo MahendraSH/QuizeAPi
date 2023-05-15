@@ -1,6 +1,6 @@
 const app = require('./app');
 const moment = require('moment');
-// const dotenv = require('dotenv').config({ path: './config/.env' });
+const dotenv = require('dotenv')
 
 dotenv.config({ path: './.env' });
 const dbConnect = require('./config/connectDB');
