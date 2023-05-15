@@ -37,12 +37,12 @@ const createQuiz = CatchAsycErrors(async (req, res, next) => {
 
     if (moment(currentDateTime).isBetween(startDate, endDate, null, '[]')) {
         status = "active"
-        console.log("active")
+        // console.log("active")
     }
     else if (moment(currentDateTime).isBefore(startDate, null, '[]')) {
-        status = "inactive"
-        console.log("inactive")
-        console.log(moment(currentDateTime).format('YYYY-MM-DD HH:mm:ss'))
+        // status = "inactive"
+        // console.log("inactive")
+        // console.log(moment(currentDateTime).format('YYYY-MM-DD HH:mm:ss'))
     }
     else {
         return next(new ErrorHandler("start date and end date should be greater than current date", 400));
@@ -66,4 +66,40 @@ const createQuiz = CatchAsycErrors(async (req, res, next) => {
     });
 });
 
-module.exports = { createQuiz };
+//get all quiz
+const getAllQuiz = CatchAsycErrors(async (req, res, next) => {
+    const quiz = await quizModels.find({}).populate("user", "name email");
+
+    res.status(200).json({
+        success: true,
+        quiz,
+    });
+});
+
+//  get all active quiz
+const getActiveQuiz = CatchAsycErrors(async (req, res, next) => {
+    const quiz = await quizModels.find({ status: "active" });
+    res.status(200).json({
+        
+        success: true,
+        
+        success: true,
+        quiz,
+    });
+
+});
+
+// get result of quzic by id 
+
+const getResultOfQuizByID = CatchAsycErrors(async (req, res, next) => {
+    const quiz = await quizModels.findById(req.params.id).select('+Questions.rightAnswer');
+    res.status(200).json({
+        success: true,
+        quiz,
+    });
+});
+
+
+
+
+module.exports = { createQuiz,getAllQuiz,getActiveQuiz,getResultOfQuizByID  }

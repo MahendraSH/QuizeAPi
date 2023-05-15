@@ -16,7 +16,8 @@ const quizSchema = new moongoose.Schema({
         }],
         rightAnswer: {
             type: String,
-            required: true
+            required: true,
+            select:false
         },
 
     },],
