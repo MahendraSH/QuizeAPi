@@ -1,6 +1,8 @@
 const app = require('./app');
 const moment = require('moment');
-const dotenv = require('dotenv').config({ path: './config/.env' });
+// const dotenv = require('dotenv').config({ path: './config/.env' });
+
+dotenv.config({ path: './.env' });
 const dbConnect = require('./config/connectDB');
 const quizModels = require('./models/quizModels');
 const CronJob = require('cron').CronJob;
