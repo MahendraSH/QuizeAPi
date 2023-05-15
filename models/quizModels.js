@@ -36,17 +36,10 @@ const quizSchema = new moongoose.Schema({
         required: true
     },
 
-    inactive: {
-        type: Boolean,
-        required: true
-    },
-    active: {
-        type: Boolean,
-        required: true
-    },
-    finished: {
-        type: Boolean,
-        required: true
+    status: {
+        type: String,
+        enum: ['active', 'inactive', 'finished', 'result'],
+        default: 'inactive'
     }
 });
 

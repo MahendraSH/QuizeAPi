@@ -9,6 +9,7 @@ app.use(cookiParser());
 
 // use routes
 app.use('/api/user', require("./routers/userRouters"));
+app.use('/api',require("./routers/quizRouters"));
 
 // use error controller
 
